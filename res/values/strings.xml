@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Belated</string>
+    <string name="action_settings">Settings</string>
+    <string name="Email_label">Your email</string>
+    <string name="service_control_description">If enabled, we\'ll be periodically sending your location to an online service. Your phone\'s GPS and data connection will be used.</string>
+    <string name="location_service">Belated Service</string>
+    <string name="service_control_heading">Tell meeting organisers if I\'m likely to be late.</string>
+    <string name="service_url">Service address</string>
+    <string name="demoBelatedURL">The service http:// address.</string>
+
+</resources>
