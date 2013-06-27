@@ -26,11 +26,13 @@ public class BackgroundLocationService extends IntentService {
 	
 	public BackgroundLocationService() {
 		super("Sends user position reports for Belated");
-		preferences = new PreferenceHelper(this);
+		preferences = null;
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
+		if (preferences == null)
+			preferences = new PreferenceHelper(this);
 		if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED))
 		{
 			Log.v("BackgroundLocationService", "Received a location update.");
@@ -86,7 +88,7 @@ public class BackgroundLocationService extends IntentService {
 			Log.e("BackgroundLocationService", "Client protocol exception on HTTP Post.");
 		} 
 		catch (IOException e) {
-			Log.e("BackgroundLocationService", "IO exception on HTTP Post.");
+			Log.e("BackgroundLocationService", "IO exception on HTTP Post. " + e.getMessage());
 		}
 	}
 	
