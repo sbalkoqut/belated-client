@@ -27,7 +27,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		if (meetingSoon())
 		{
 			//locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10 * 1000, locationChangedIntent);
-			locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationChangedIntent);
+			locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, locationChangedIntent);
 				
 			if (BackgroundLocationService.wakeLock == null)
 			{
