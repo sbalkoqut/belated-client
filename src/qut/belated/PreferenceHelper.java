@@ -70,7 +70,7 @@ public class PreferenceHelper {
 	
 	public String getServiceAddress()
 	{
-		return preferences.getString("serviceAddress", null);
+		return preferences.getString("serviceAddress", "http://54.252.45.18/location");
 	}
 	
 	public void setServiceAddress(String address)
