@@ -68,20 +68,20 @@ public class PreferenceHelper {
 			return null;
 	}
 	
-	public String getServiceAddress()
+	public String getServiceIP()
 	{
-		return preferences.getString("serviceAddress", "http://54.252.45.18/location");
+		return preferences.getString("serviceIP", "54.252.45.18");
 	}
 	
-	public void setServiceAddress(String address)
+	public void setServiceIP(String address)
 	{
-		if (address.equals(getServiceAddress()))
+		if (address.equals(getServiceIP()))
 			return;
 		
 		SharedPreferences.Editor preferenceEditor = preferences.edit();
-		preferenceEditor.putString("serviceAddress", address);
+		preferenceEditor.putString("serviceIP", address);
 		preferenceEditor.commit();
 		
-		Log.v("PreferenceHelper", "Service address changed to \"" + address + "\".");
+		Log.v("PreferenceHelper", "Service IP changed to \"" + address + "\".");
 	}
 }

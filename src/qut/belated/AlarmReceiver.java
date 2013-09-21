@@ -9,6 +9,7 @@ import android.location.LocationManager;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
+import android.widget.Toast;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -27,8 +28,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 		if (meetingSoon())
 		{
 			//locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10 * 1000, locationChangedIntent);
-			locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, locationChangedIntent);
-				
+			//NETWORK_PROVIDER GPS_PROVIDER
+			locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationChangedIntent);
+			
+			if (MainActivity.inForeground)
+			{
+				Toast.makeText(context, "Attempting to determine location.", Toast.LENGTH_SHORT).show();
+			}
+			
 			if (BackgroundLocationService.wakeLock == null)
 			{
 				Log.v("AlarmReceiver", "Getting a wake lock for 60 seconds.");
