@@ -27,9 +27,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 		
 		if (meetingSoon())
 		{
-			//locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10 * 1000, locationChangedIntent);
-			//NETWORK_PROVIDER GPS_PROVIDER
-			locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationChangedIntent);
+			// NETWORK_PROVIDER : Should be set for release / to run on actual Android Devices
+			// GPS_PROVIDER     : Needed in emulator to avoid crash
+			locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, locationChangedIntent);
 			
 			if (MainActivity.inForeground)
 			{
