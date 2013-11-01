@@ -54,12 +54,14 @@ public class MainActivity extends Activity {
 	Button btnWalkingDirections;
 	Button btnDrivingDirections;
 	Button btnTransitDirections;
+	Button btnOnlineConference;
 	TextView txtWalkingDetail;
 	TextView txtDrivingDetail;
 	TextView txtTransitDetail;
 	RelativeLayout layoutWalking;
 	RelativeLayout layoutDriving;
 	RelativeLayout layoutTransit;
+	RelativeLayout layoutOnline;
 	
 	MapFragment googleMapFragment;
 	GoogleMap googleMap;
@@ -93,6 +95,10 @@ public class MainActivity extends Activity {
 				if (!hasFocus)
 				{
 					preferences.setEmail(emailField.getText().toString().trim());
+					if (!gettingMeetings)
+					{
+				    	new GetMeetingsTask(MainActivity.this).execute();
+					}
 				}
 			}
         });
@@ -106,6 +112,10 @@ public class MainActivity extends Activity {
 				if (!hasFocus)
 				{
 					preferences.setServiceIP(urlField.getText().toString().trim());
+					if (!gettingMeetings)
+					{
+				    	new GetMeetingsTask(MainActivity.this).execute();
+					}
 				}
 			}
         });
@@ -162,6 +172,15 @@ public class MainActivity extends Activity {
         });
         btnTransitDirections.setEnabled(false);
         
+        btnOnlineConference = (Button) findViewById(R.id.btnOnline);
+        btnOnlineConference.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startConference();
+			}
+		});
+        
         txtWalkingDetail = (TextView) findViewById(R.id.txtWalkingDetail);
         txtDrivingDetail = (TextView) findViewById(R.id.txtDrivingDetail);
         txtTransitDetail = (TextView) findViewById(R.id.txtTransitDetail);
@@ -169,6 +188,7 @@ public class MainActivity extends Activity {
         layoutWalking = (RelativeLayout) findViewById(R.id.layoutWalking);
         layoutDriving = (RelativeLayout) findViewById(R.id.layoutDriving);
         layoutTransit = (RelativeLayout) findViewById(R.id.layoutTransit);
+        layoutOnline = (RelativeLayout) findViewById(R.id.layoutOnline);
         
         googleMapFragment = ((MapFragment) getFragmentManager().findFragmentById(R.id.map));
         googleMapFragment.getView().setVisibility(View.INVISIBLE);
@@ -202,6 +222,20 @@ public class MainActivity extends Activity {
 		startActivity(intent);
     }
     
+    private void startConference()
+    {
+    	if (meeting == null)
+    		return;
+    	if (!meeting.hasConferenceURL())
+    		return;
+    	
+    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+    			meeting.getConferenceURL());
+    	
+    	startActivity(intent);
+    }
+    
+    private boolean gettingMeetings;
     public static boolean inForeground;
     public static MainActivity instance;
     protected void onResume()
@@ -209,6 +243,7 @@ public class MainActivity extends Activity {
     	super.onResume();
     	instance = this;
     	inForeground = true;
+    	gettingMeetings = true;
     	new GetMeetingsTask(this).execute();
     }
     
@@ -260,6 +295,16 @@ public class MainActivity extends Activity {
 			layoutWalking.setVisibility(View.VISIBLE);
 			layoutDriving.setVisibility(View.VISIBLE);
 			layoutTransit.setVisibility(View.VISIBLE);
+			
+			if (m.hasConferenceURL())
+			{
+				layoutOnline.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				layoutOnline.setVisibility(View.GONE);
+			}
+			
 			btnDrivingDirections.setEnabled(false);
 			btnWalkingDirections.setEnabled(false);
 			btnTransitDirections.setEnabled(false);
@@ -295,7 +340,9 @@ public class MainActivity extends Activity {
 			layoutWalking.setVisibility(View.INVISIBLE);
 			layoutDriving.setVisibility(View.INVISIBLE);
 			layoutTransit.setVisibility(View.INVISIBLE);
+			layoutOnline.setVisibility(View.GONE);
 			googleMapFragment.getView().setVisibility(View.INVISIBLE);
+			gettingMeetings = false;
 		}
     	
     }
@@ -392,6 +439,7 @@ public class MainActivity extends Activity {
     	{
     		CameraUpdate update = CameraUpdateFactory.newLatLngBounds(directionBounds, 30);
 			googleMap.moveCamera(update);
+			gettingMeetings = false;
     	}
     }
     
@@ -404,6 +452,5 @@ public class MainActivity extends Activity {
     		polyLine.add(points.get(i));
     	}
     	return polyLine;
-    	
     }
 }

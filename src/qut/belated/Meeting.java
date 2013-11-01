@@ -6,6 +6,8 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.net.Uri;
+
 public class Meeting {
 	public Meeting(JSONObject o) throws JSONException
 	{
@@ -14,8 +16,21 @@ public class Meeting {
 		location = o.getString("location");
 		latitude = o.getDouble("latitude");
 		longitude = o.getDouble("longitude");
+		if (o.has("conferenceURL"))
+		{
+			String value = o.getString("conferenceURL");
+			try
+			{
+				conferenceURL = Uri.parse(value);
+			} catch (Exception e) {
+				conferenceURL = null;
+			}
+		}
+		else
+			conferenceURL = null;		
 		String startDateString = o.getString("start");
 		String endDateString = o.getString("end");
+		
 		try {
 			start= ISO8601DateParser.parse(startDateString);
 			end = ISO8601DateParser.parse(endDateString);
@@ -23,6 +38,7 @@ public class Meeting {
 			throw new JSONException("Start or end date not ISO8601 encoded.");
 		}
 	}
+	
 	String subject;
 	public String getSubject(){
 		return subject;
@@ -58,5 +74,12 @@ public class Meeting {
 		return end;
 	}
 	
+	Uri conferenceURL;
+	public Uri getConferenceURL() {
+		return conferenceURL;
+	}
 	
+	public boolean hasConferenceURL() {
+		return conferenceURL != null;
+	}
 }

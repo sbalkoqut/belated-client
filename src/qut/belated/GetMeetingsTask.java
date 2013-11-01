@@ -60,10 +60,11 @@ public class GetMeetingsTask extends AsyncTask<Void, Void, Meeting[]> {
 	private Meeting[] getUpcomingMeetings(PreferenceHelper preferences)
 	{
 		HttpClient client = new DefaultHttpClient();
-		HttpConnectionParams.setConnectionTimeout(client.getParams(), 15000); 
+		HttpConnectionParams.setConnectionTimeout(client.getParams(), 7000); 
 		
 		HttpContext context = new BasicHttpContext();
 		HttpGet httpGet = null;
+		
 		String address = Utils.getMeetingsUrl(preferences.getServiceIP(), preferences.getEmail());
 		try
 		{
