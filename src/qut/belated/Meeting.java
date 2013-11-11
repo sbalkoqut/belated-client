@@ -16,18 +16,15 @@ public class Meeting {
 		location = o.getString("location");
 		latitude = o.getDouble("latitude");
 		longitude = o.getDouble("longitude");
+		conferenceURL = null;
 		if (o.has("conferenceURL"))
 		{
 			String value = o.getString("conferenceURL");
-			try
+			if (!value.equalsIgnoreCase("null"))
 			{
 				conferenceURL = Uri.parse(value);
-			} catch (Exception e) {
-				conferenceURL = null;
 			}
-		}
-		else
-			conferenceURL = null;		
+		}	
 		String startDateString = o.getString("start");
 		String endDateString = o.getString("end");
 		
