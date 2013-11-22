@@ -1,5 +1,6 @@
 package qut.belated;
 
+import qut.belated.helpers.AlarmHelper;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +9,17 @@ import android.util.Log;
 public class BootReceiver extends BroadcastReceiver {
 
 	@Override
-	public void onReceive(Context c, Intent bootIntent) {
+	public void onReceive(Context context, Intent bootIntent) {
 		Log.v("BootReceiver", "Device booted.");
 		
-		PreferenceHelper preferences = new PreferenceHelper(c);
+		setupBackgroundLocationUpdates(context);
+	}
+	
+	private void setupBackgroundLocationUpdates(Context context)
+	{
+		BelatedPreferences preferences = new BelatedPreferences(context);
 		
-		AlarmHelper.setAlarmState(c, preferences.isServiceEnabled());
+		AlarmHelper.setAlarms(context, preferences.isServiceEnabled());
 	}
 
 }

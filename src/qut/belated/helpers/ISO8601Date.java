@@ -1,4 +1,4 @@
-package qut.belated;
+package qut.belated.helpers;
 
 /*
  * Copyright 1999,2004 The Apache Software Foundation.
@@ -19,6 +19,7 @@ package qut.belated;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 
@@ -29,10 +30,7 @@ import java.util.TimeZone;
  * @author <a href="mailto:burton@apache.org">Kevin A. Burton (burtonator)</a>
  * @version $Id: ISO8601DateParser.java,v 1.2 2005/06/03 20:25:29 snoopdave Exp $
  */
-public class ISO8601DateParser {
-
-    // 2004-06-14T19:GMT20:30Z
-    // 2004-06-20T06:GMT22:01Z
+public class ISO8601Date {
 
     // http://www.cl.cam.ac.uk/~mgk25/iso-time.html
     //    
@@ -80,7 +78,7 @@ public class ISO8601DateParser {
 
         //NOTE: SimpleDateFormat uses GMT[-+]hh:mm for the TZ which breaks
         //things a bit.  Before we go on we have to repair this.
-        SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss.SSSz" );
+        SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss.SSSz", Locale.US);
         
         //this is zero time so we need to add that TZ indicator for 
         if ( input.endsWith( "Z" ) ) {
@@ -94,32 +92,21 @@ public class ISO8601DateParser {
             input = s0 + "GMT" + s1;
         }
         
-        return df.parse( input );
+        return format.parse( input );
         
     }
 
     public static String toString( Date date ) {
         
-        SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssz" );
-        
-        TimeZone tz = TimeZone.getTimeZone( "UTC" );
-        
-        df.setTimeZone( tz );
+        SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssz", Locale.US);
+        TimeZone timezone = TimeZone.getTimeZone( "GMT" );
+        format.setTimeZone(timezone);
+        String formattedDate = format.format( date );
 
-        String output = df.format( date );
-
-        int inset0 = 9;
-        int inset1 = 6;
+        int dateInset = "2013-07-16T19:20:30".length(); 
+        String dateSection = formattedDate.substring( 0, dateInset );
         
-        String s0 = output.substring( 0, output.length() - inset0 );
-        String s1 = output.substring( output.length() - inset1, output.length() );
-
-        String result = s0 + s1;
-
-        result = result.replaceAll( "UTC", "+00:00" );
-        
-        return result;
-        
+        return dateSection + "Z";
     }
 
 }

@@ -7,11 +7,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class PreferenceHelper {
+public class BelatedPreferences {
 	SharedPreferences preferences;
 	Context context;
 	
-	public PreferenceHelper(Context context)
+	public BelatedPreferences(Context context)
 	{
 		preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		this.context = context;
@@ -22,24 +22,24 @@ public class PreferenceHelper {
 		return preferences.getBoolean("serviceEnabled", true);
 	}
 	
-	public void setServiceEnabled(boolean enabled)
+	public void setServiceEnabled(boolean enable)
 	{
-		if (enabled == isServiceEnabled())
+		if (enable == isServiceEnabled())
 			return;
 		
 		SharedPreferences.Editor preferenceEditor = preferences.edit();
-		preferenceEditor.putBoolean("serviceEnabled", enabled);
+		preferenceEditor.putBoolean("serviceEnabled", enable);
 		preferenceEditor.commit();
 		
 
-		Log.v("PreferenceHelper", "Service now " + Boolean.toString(enabled) + ".");
+		Log.v("PreferenceHelper", "Service enablement now changed to " + Boolean.toString(enable) + ".");
 	}
 	
 	public String getEmail()
 	{
 		if (preferences.contains("email"))
 		{
-			return preferences.getString("email", null);
+			return preferences.getString("email", "");
 		}
 		else
 		{
@@ -65,7 +65,7 @@ public class PreferenceHelper {
 		if (accounts.length > 0)
 			return accounts[0].name;
 		else
-			return null;
+			return "";
 	}
 	
 	public String getServiceIP()

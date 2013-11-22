@@ -1,281 +1,309 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+
     
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+   	 	xmlns:tools="http://schemas.android.com/tools"
+    	android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" 
+    	tools:context=".MainActivity">
 
         <LinearLayout
             android:id="@+id/scrollLayout"
             android:layout_width="match_parent"
-            android:layout_height="329dp"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="7dp" >
 
             <TextView
                 android:id="@+id/txtMeetingTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Loading..."
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="@string/title_loading"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <TextView
-                android:id="@+id/txtMeetingDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/holo_blue_dark" />
-
-            <TextView
-                android:id="@+id/txtMeetingLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/holo_blue_dark" />
-
-            <TextView
-                android:id="@+id/txtMeetingDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" />
-
-            <RelativeLayout
-                android:id="@+id/layoutWalking"
+            <LinearLayout
+                android:id="@+id/contentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="invisible" >
-              <!-- android:visibility="invisible"   --> 
-
-                <TextView
-                    android:id="@+id/txtWalkingHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="14dp"
-                    android:text="Walking"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Button
-                    android:id="@+id/btnWalking"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="14dp"
-                    android:enabled="false"
-                    android:text="Go" />
-
-                <TextView
-                    android:id="@+id/txtWalkingDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/txtWalkingHeader"
-                    android:layout_below="@+id/txtWalkingHeader"
-                    android:text="32 mins / 10 km"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#00F" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layoutDriving"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="invisible" 
-                >
-              <!-- android:visibility="invisible"   --> 
-
-                <TextView
-                    android:id="@+id/txtDrivingHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="14dp"
-                    android:text="Driving"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Button
-                    android:id="@+id/btnDriving"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="14dp"
-                    android:enabled="false"
-                    android:text="Go" />
-
-                <TextView
-                    android:id="@+id/txtDrivingDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/txtDrivingHeader"
-                    android:layout_below="@+id/txtDrivingHeader"
-                    android:text="32 mins / 10 km"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#B0B" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layoutTransit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="invisible" 
-                >
-              <!--   --> 
-
-                <TextView
-                    android:id="@+id/txtTransitHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="14dp"
-                    android:text="Transit"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Button
-                    android:id="@+id/btnTransit"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="14dp"
-                    android:enabled="false"
-                    android:text="Go" />
-
-                <TextView
-                    android:id="@+id/txtTransitDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/txtTransitHeader"
-                    android:layout_below="@+id/txtTransitHeader"
-                    android:text="32 mins / 10 km"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#F00" />
-
-            </RelativeLayout>
-            
-            <RelativeLayout
-                android:id="@+id/layoutOnline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:visibility="gone" >
-              <!-- android:visibility="invisible"   --> 
 
-                <TextView
-                    android:id="@+id/txtOnlineHeader"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/detailLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="14dp"
-                    android:text="Online"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:orientation="vertical" >
 
-                <Button
-                    android:id="@+id/btnOnline"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="14dp"
-                    android:enabled="true"
-                    android:text="Join" />
+                    <TextView
+                        android:id="@+id/txtMeetingDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/holo_blue_dark" />
 
-                <TextView
-                    android:id="@+id/txtOnlineDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/txtOnlineHeader"
-                    android:layout_below="@+id/txtOnlineHeader"
-                    android:text="via Google Hangout"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#666" />
+                    <TextView
+                        android:id="@+id/txtMeetingLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/holo_blue_dark" />
 
-            </RelativeLayout>
-            
+                    <TextView
+                        android:id="@+id/txtMeetingAttendees"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:maxLines="1"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/secondary_text_light" />
+                    
+                    <TextView
+                        android:id="@+id/txtMeetingDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:minLines="0"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@android:color/secondary_text_light" />
 
-            <fragment
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.MapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/title_physical_travel"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/primary_text_light"
+                        android:textStyle="bold" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                    <RelativeLayout
+                        android:id="@+id/layoutWalking"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/txvServiceHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:text="@string/service_control_heading" />
+                        <TextView
+                            android:id="@+id/txtWalkingHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="14dp"
+                            android:text="@string/title_walking_directions"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <Switch
-                android:id="@+id/switchBackgroundService"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:text="@string/location_service" />
+                        <Button
+                            android:id="@+id/btnWalking"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="14dp"
+                            android:enabled="false"
+                            android:text="@string/action_navigate" />
 
-            <TextView
-                android:id="@+id/txvServiceDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="@string/service_control_description" />
+                        <TextView
+                            android:id="@+id/txtWalkingDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/txtWalkingHeader"
+                            android:layout_below="@+id/txtWalkingHeader"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#00F" />
+                    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/txvServiceAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/txtServiceAddress"
-                android:layout_alignLeft="@+id/txtServiceAddress"
-                android:text="@string/service_ip" />
+                    <RelativeLayout
+                        android:id="@+id/layoutDriving"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/txtServiceAddress"
-                android:layout_width="270dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:ems="10"
-                android:hint="@string/service_ip_description" />
+                        <TextView
+                            android:id="@+id/txtDrivingHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="14dp"
+                            android:text="@string/title_driving_directions"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/txtEmailAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Email_label" />
+                        <Button
+                            android:id="@+id/btnDriving"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="14dp"
+                            android:enabled="false"
+                            android:text="@string/action_navigate" />
 
-            <EditText
-                android:id="@+id/txtEmail"
-                android:layout_width="270dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:ems="10"
-                android:inputType="textEmailAddress" />
+                        <TextView
+                            android:id="@+id/txtDrivingDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/txtDrivingHeader"
+                            android:layout_below="@+id/txtDrivingHeader"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#B0B" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layoutTransit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/txtTransitHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="14dp"
+                            android:text="@string/title_transit_directions"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Button
+                            android:id="@+id/btnTransit"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="14dp"
+                            android:enabled="false"
+                            android:text="@string/action_navigate" />
+
+                        <TextView
+                            android:id="@+id/txtTransitDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/txtTransitHeader"
+                            android:layout_below="@+id/txtTransitHeader"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#F00" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/title_alternative_travel"
+                        android:textColor="@android:color/primary_text_light"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/layoutOnline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible" >
+
+                        <TextView
+                            android:id="@+id/txtOnlineHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="14dp"
+                            android:text="@string/title_video_conference"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Button
+                            android:id="@+id/btnOnline"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="14dp"
+                            android:enabled="true"
+                            android:text="@string/action_join_conference" />
+
+                        <TextView
+                            android:id="@+id/txtOnlineDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/txtOnlineHeader"
+                            android:layout_below="@+id/txtOnlineHeader"
+                            android:text="@string/subtitle_video_conference"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#666" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layoutDecline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible" >
+
+                        <TextView
+                            android:id="@+id/txtDeclineHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="14dp"
+                            android:text="@string/title_decline_meeting"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Button
+                            android:id="@+id/btnDecline"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="14dp"
+                            android:enabled="true"
+                            android:text="@string/action_decline_meeting" />
+
+                        <TextView
+                            android:id="@+id/txtDeclineDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/txtDeclineHeader"
+                            android:layout_below="@+id/txtDeclineHeader"
+                            android:text="@string/subtitle_decline_meeting"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#666" />
+                    </RelativeLayout>
+                </LinearLayout>
+	            
+	            <fragment
+	                android:id="@+id/map"
+	                android:name="com.google.android.gms.maps.MapFragment"
+	                android:layout_width="match_parent"
+	                android:layout_height="300dp"
+	                android:layout_marginTop="10dp" />
+	
+	            <TextView
+	                android:id="@+id/txtDirectionsCopyright"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+	                android:layout_marginRight="@dimen/activity_horizontal_margin"
+	                android:textAppearance="?android:attr/textAppearanceSmall"
+	                android:textColor="#666" />
+	            
+	        </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
-
-</RelativeLayout>

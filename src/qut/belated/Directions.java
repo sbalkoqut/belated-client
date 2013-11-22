@@ -1,16 +1,20 @@
 package qut.belated;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import qut.belated.helpers.PolylineDecoder;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 public class Directions {
-	public Directions(JSONObject o, String mode) throws JSONException {
+	public Directions(JSONObject o, PhysicalTravelMode mode) throws JSONException {
 		JSONArray routes = o.getJSONArray("routes");
 		if (routes.length() == 0)
 			throw new JSONException("Expected atleast one route.");
@@ -28,18 +32,37 @@ public class Directions {
 		
 		JSONObject distance = leg.getJSONObject("distance");
 		distanceText = distance.getString("text");
-		distanceValue = distance.getInt("value");
+		distanceInMeters = distance.getInt("value");
 		
 		JSONObject duration = leg.getJSONObject("duration");
 		durationText = duration.getString("text");
-		durationValue = duration.getInt("value");
+		durationInSeconds = duration.getInt("value");
 		
 		JSONObject overviewPolyline = route.getJSONObject("overview_polyline");
 		String pointData = overviewPolyline.getString("points");
-		points = decodeRoute(pointData);
-		
+		points = PolylineDecoder.decodePolyline(pointData);
 		
 		this.mode = mode;
+		this.found = true;
+	}
+	
+	public Directions(PhysicalTravelMode mode)
+	{
+		this.copyright = "";
+		this.bounds = null;
+		this.distanceText = null;
+		this.distanceInMeters = 0;
+		this.durationText = null;
+		this.durationInSeconds = 0;
+		this.points = null;
+		this.mode = mode;
+		this.found = false;
+	}
+	
+	boolean found;
+	public boolean wereFound()
+	{
+		return found;
 	}
 	
 	private static LatLngBounds BoundsFromJson(JSONObject bounds) throws JSONException
@@ -68,10 +91,10 @@ public class Directions {
 		return distanceText;
 	}
 	
-	private int distanceValue;
-	public int getDistanceValue()
+	private int distanceInMeters;
+	public int getDistanceInMeters()
 	{
-		return distanceValue;
+		return distanceInMeters;
 	}
 	
 	private String durationText;
@@ -80,10 +103,18 @@ public class Directions {
 		return durationText;
 	}
 	
-	private int durationValue;
-	public int getDurationValue()
+	private int durationInSeconds;
+	public int getDurationInSeconds()
 	{
-		return durationValue;
+		return durationInSeconds;
+	}
+	
+	public Date computeEstimatedTimeOfArrival()
+	{
+		Calendar estimatedTimeOfArrival = Calendar.getInstance();
+		estimatedTimeOfArrival.setTime(new Date());
+		estimatedTimeOfArrival.add(Calendar.SECOND, this.getDurationInSeconds());
+		return estimatedTimeOfArrival.getTime();
 	}
 	
 	private LatLngBounds bounds;
@@ -92,85 +123,11 @@ public class Directions {
 		return bounds;
 	}
 	
-	private String mode;
-	public String getMode()
+	private PhysicalTravelMode mode;
+	public PhysicalTravelMode getMode()
 	{
 		return mode;
 	}
 	
-	 private ArrayList<LatLng> decodeRoute(String encoded) {
-	        ArrayList<LatLng> poly = new ArrayList<LatLng>();
-	        int index = 0, len = encoded.length();
-	        int lat = 0, lng = 0;
-	        while (index < len) {
-	            int b, shift = 0, result = 0;
-	            do {
-	                b = encoded.charAt(index++) - 63;
-	                result |= (b & 0x1f) << shift;
-	                shift += 5;
-	            } while (b >= 0x20);
-	            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-	            lat += dlat;
-	            shift = 0;
-	            result = 0;
-	            do {
-	                b = encoded.charAt(index++) - 63;
-	                result |= (b & 0x1f) << shift;
-	                shift += 5;
-	            } while (b >= 0x20);
-	            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-	            lng += dlng;
-
-	            LatLng position = new LatLng((double) lat / 1E5, (double) lng / 1E5);
-	            poly.add(position);
-	        }
-	        return poly;
-	 }
-
-
 	
-//	private ArrayList<LatLng> decodeRoute(String s) {
-//        ArrayList<LatLng> route = new ArrayList<LatLng>();
-//        
-//        int latitude = 0;
-//        int longitude = 0;
-//        boolean readingLatitude = true;
-//
-//        int index = 0;
-//        int length = s.length();
-//        while (index < length) {
-//        	int result = 0;
-//        	int count = 0;
-//        	int chunk;
-//        	do {
-//        		chunk = s.charAt(index++) - 63;
-//        		chunk = chunk << (5 * count);
-//        		result = result | chunk;
-//        		count++;
-//        	} while ((chunk & 0x20) != 0);
-//        	
-//        	if (result % 2 == 1)
-//        	{
-//        		result = result >> 1;
-//        		result = ~result;
-//        	}
-//        	else
-//        		result = result >> 1;
-//        	
-//        	if (readingLatitude)
-//        		latitude += result;
-//        	else
-//        	{
-//        		longitude += result;
-//        		
-//        		double lat = ((double)latitude) / ((double)10000);
-//        		double lng = ((double)longitude) / ((double)10000);
-//        		
-//        		LatLng position = new LatLng(lat, lng);
-//        		route.add(position);
-//        	}
-//        	readingLatitude = !readingLatitude;
-//        }
-//        return route;
-//    }
 }

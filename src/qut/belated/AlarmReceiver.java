@@ -1,54 +1,38 @@
 package qut.belated;
 
-import android.annotation.SuppressLint;
-import android.app.PendingIntent;
+import java.util.Locale;
+
+import qut.belated.helpers.LocationHelper;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
 import android.util.Log;
-import android.widget.Toast;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-	@SuppressLint("Wakelock") // We intend to releasing it in BackgroundLocationService.
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.v("AlarmReceiver", "Received a periodic alarm.");
 		
-		LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-			
-		Intent locationChangedNotificationIntent = new Intent(context, BackgroundLocationService.class);
-		PendingIntent locationChangedIntent = PendingIntent.getService(context, 0, locationChangedNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			
-		locationManager.removeUpdates(locationChangedIntent);
-		
+		updateLocationIfRequired(context);
+	}
+	
+	private void updateLocationIfRequired(Context context)
+	{
 		if (meetingSoon())
 		{
-			// NETWORK_PROVIDER : Should be set for release / to run on actual Android Devices
-			// GPS_PROVIDER     : Needed in emulator to avoid crash
-			locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, locationChangedIntent);
-			
-			if (MainActivity.inForeground)
-			{
-				Toast.makeText(context, "Attempting to determine location.", Toast.LENGTH_SHORT).show();
-			}
-			
-			if (BackgroundLocationService.wakeLock == null)
-			{
-				Log.v("AlarmReceiver", "Getting a wake lock for 60 seconds.");
-				PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-				WakeLock lock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocationChangedReceiver");
-				lock.acquire(60 * 1000);
-				BackgroundLocationService.wakeLock = lock;
-			}
+			LocationHelper.requestBackgroundLocationUpdate(context);
+			showLocationRequestedToast(context);	
 		}
 	}
 	
 	private boolean meetingSoon()
 	{
 		return true;
+	}
+	
+	private static void showLocationRequestedToast(Context context)
+	{
+		MainActivity.showToast("Determining location via " + LocationHelper.getActiveLocationProvider().toUpperCase(Locale.US) + ".");
 	}
 }
