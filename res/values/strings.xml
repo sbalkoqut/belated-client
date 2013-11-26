@@ -14,10 +14,10 @@
     <string name="title_physical_travel">Travel Options</string>
     <string name="title_walking_directions">Walking</string>
     <string name="title_driving_directions">Driving</string>
-    <string name="title_transit_directions">Transit</string>
+    <string name="title_transit_directions">Public Transport</string>
     <string name="subtitle_directions_not_available">Not available from here</string><string name="action_navigate">Go</string><string name="title_video_conference">Video Conference</string>
     <string name="subtitle_video_conference">via Google Hangout</string>
-    <string name="action_join_conference">Join</string><string name="title_decline_meeting">Don\'t Attend</string>
+    <string name="action_join_conference">Join</string><string name="title_decline_meeting">Won\'t Attend</string>
     <string name="subtitle_decline_meeting">Decline the invitation</string>
     <string name="action_decline_meeting">Decline</string>
     <string name="action_undo_decline_meeting">Undo</string><string name="title_loading">Loading…</string>
